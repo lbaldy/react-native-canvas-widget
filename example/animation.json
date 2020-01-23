@@ -1,0 +1,45 @@
+[
+  {
+    "name": "fillStyle",
+    "value": ["#000000"]
+  },
+  {
+    "name": "strokeStyle",
+    "value": ["#0099ff"]
+  },
+  {
+    "name": "translate",
+    "value": [150, 150]
+  },
+  {
+    "name": "rotate",
+    "value": [
+      ((2 * Math.PI) / 60) * time.getSeconds() +
+        ((2 * Math.PI) / 60000) * time.getMilliseconds()
+    ]
+  },
+  {
+    "name": "translate",
+    "value": [105, 0]
+  },
+  {
+    "name": "fillRect",
+    "value": [0, -12, 40, 24]
+  },
+  {
+    "name": "drawImage",
+    "value": []
+  },
+  {
+    "name": "beginPath",
+    "value": []
+  },
+  {
+    "name": "arc",
+    "value": [150, 150, 105, 0, Math.PI * 2]
+  },
+  {
+    "name": "stroke",
+    "value": []
+  }
+]

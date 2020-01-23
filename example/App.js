@@ -14,7 +14,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
 import CBCanvasWidget from "react-native-canvas-widget";
 
@@ -48,22 +49,54 @@ export default class App extends Component<{}> {
       activeIndex: 0,
       counter: 0
     };
+    this.animate = this.animate.bind(this);
+  }
+
+  animate() {
+    const time = new Date();
+    const commands = [
+      {
+        name: "save",
+        value: []
+      },
+      {
+        name: "translate",
+        value: [150, 150]
+      },
+      {
+        name: "rotate",
+        value: [
+          ((2 * Math.PI) / 60) * time.getSeconds() +
+            ((2 * Math.PI) / 60000) * time.getMilliseconds()
+        ]
+      },
+      {
+        name: "translate",
+        value: [105, 0]
+      },
+      {
+        name: "fillRect",
+        value: [0, -12, 40, 24]
+      },
+      {
+        name: "drawImage",
+        value: [-12, -12]
+      },
+      {
+        name: "restore",
+        value: []
+      }
+    ];
+    this._canvas.setNativeProps({
+      commands: JSON.stringify(commands)
+    });
+    this.setState({
+      counter: this.state.counter + 1
+    });
   }
 
   componentDidMount() {
-    setInterval(() => {
-      if (this.state.activeIndex < this.states.length) {
-        this.setState({
-          activeIndex: this.state.activeIndex + 1,
-          counter: this.state.counter + 1
-        });
-      } else {
-        this.setState({
-          activeIndex: 0,
-          counter: this.state.counter + 1
-        });
-      }
-    }, 240);
+    setInterval(this.animate, 33);
   }
 
   render() {
@@ -76,13 +109,18 @@ export default class App extends Component<{}> {
         >
           <Text>sadsad {this.state.counter}</Text>
         </TouchableOpacity>
-        <CBCanvasWidget
-          onChange={() => {
-            this.setState({ counter: this.state.counter + 1 });
-          }}
-          style={{ width: 200, height: 200 }}
-          commands={this.states[this.state.activeIndex]}
-        />
+        <View style={{ width: 300, height: 300 }}>
+          <CBCanvasWidget
+            onChange={() => {
+              this.setState({ counter: this.state.counter + 1 });
+            }}
+            style={{
+              width: 300,
+              height: 300
+            }}
+            ref={component => (this._canvas = component)}
+          />
+        </View>
       </View>
     );
   }
