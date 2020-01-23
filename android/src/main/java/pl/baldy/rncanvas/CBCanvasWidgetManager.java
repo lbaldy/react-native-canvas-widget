@@ -8,11 +8,13 @@ import android.view.View;
 
 import android.widget.ImageView;
 
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 public class CBCanvasWidgetManager extends SimpleViewManager<View> {
 
@@ -23,6 +25,16 @@ public class CBCanvasWidgetManager extends SimpleViewManager<View> {
     @Override
     public String getName() {
         return REACT_CLASS;
+    }
+
+    public Map getExportedCustomBubblingEventTypeConstants() {
+        return MapBuilder.builder()
+                .put(
+                        "topChange",
+                        MapBuilder.of(
+                                "phasedRegistrationNames",
+                                MapBuilder.of("bubbled", "onChange")))
+                .build();
     }
 
     @Override

@@ -9,17 +9,79 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
+} from "react-native";
 import CBCanvasWidget from "react-native-canvas-widget";
 
 export default class App extends Component<{}> {
+  states = [
+    '[{"name":"fillStyle","value":["#00FFbb"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#FF0000"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FF00"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#0000ff"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FFbb"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#FF0000"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FF00"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#0000ff"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FFbb"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#FF0000"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FF00"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#0000ff"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FFbb"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#FF0000"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FF00"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#0000ff"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FFbb"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#FF0000"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#00FF00"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]',
+    '[{"name":"fillStyle","value":["#0000ff"]},{"name":"fillRect","value":[0, 0, 300, 150]},{"name":"clearRect","value":[20, 20, 100, 50]}]'
+  ];
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeIndex: 0,
+      counter: 0
+    };
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      if (this.state.activeIndex < this.states.length) {
+        this.setState({
+          activeIndex: this.state.activeIndex + 1,
+          counter: this.state.counter + 1
+        });
+      } else {
+        this.setState({
+          activeIndex: 0,
+          counter: this.state.counter + 1
+        });
+      }
+    }, 240);
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => {
+            this.setState({ counter: this.state.counter + 1 });
+          }}
+        >
+          <Text>sadsad {this.state.counter}</Text>
+        </TouchableOpacity>
         <CBCanvasWidget
-          commands={
-            '[{"name":"beginPath","value":[]},{"name":"lineWidth","value":[5]},{"name":"strokeStyle","value":["#00ee1c"]},{"name":"moveTo","value":[20,20]},{"name":"bezierCurveTo","value":[20,100,200,100,200,20]},{"name":"quadraticCurveTo","value":[20,100,200,20]},{"name":"rect","value":[20,20,350,300]},{"name":"arc","value":[100,75,50,0,6.283185307179586]},{"name":"stroke","value":[]}]'
-          }
+          onChange={() => {
+            this.setState({ counter: this.state.counter + 1 });
+          }}
+          style={{ width: 200, height: 200 }}
+          commands={this.states[this.state.activeIndex]}
         />
       </View>
     );
